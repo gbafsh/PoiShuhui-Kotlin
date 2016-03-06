@@ -10,7 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.flying.xiaopo.poishuhui_kotlin.R
-import com.flying.xiaopo.poishuhui_kotlin.domain.data.CoverSource
+import com.flying.xiaopo.poishuhui_kotlin.domain.data.BookSource
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
 import com.flying.xiaopo.poishuhui_kotlin.log
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.CoverAdapter
@@ -19,50 +19,45 @@ import org.jetbrains.anko.uiThread
 import java.util.*
 
 /**
- * Created by Flying SnowBean on 16-3-2.
+ * Created by Flying SnowBean on 16-3-5.
  */
-class HomeFragment : Fragment() {
+class BookFragment : Fragment() {
     var mData = ArrayList<Cover>()
-    lateinit var coverList: RecyclerView
-    lateinit var homeRefresh: SwipeRefreshLayout
     var adapter = CoverAdapter()
+    lateinit var bookList: RecyclerView
+    lateinit var bookRefresh: SwipeRefreshLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
-        log("onCreate")
-
+        this.retainInstance = true
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var rootView = inflater?.inflate(R.layout.fragment_home, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         log("onCreateView")
-
+        var rootView = inflater.inflate(R.layout.fragment_book, container, false)
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         log("onViewCreated")
+        bookRefresh = view.findViewById(R.id.bookRefresh) as SwipeRefreshLayout
+        bookList = view.findViewById(R.id.bookList) as RecyclerView
 
-        homeRefresh = view.findViewById(R.id.homeRefresh) as SwipeRefreshLayout
-        coverList = view.findViewById(R.id.homeList) as RecyclerView
+        bookList.layoutManager = GridLayoutManager(context, 2)
+        bookList.adapter = adapter
 
-        coverList.layoutManager = GridLayoutManager(context, 2)
-        coverList.adapter = adapter
-
-        homeRefresh.setOnRefreshListener {
+        bookRefresh.setOnRefreshListener {
             load()
         }
-        homeRefresh.post { homeRefresh.isRefreshing = true }
-
+        bookRefresh.post { bookRefresh.isRefreshing = true }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         log("setUserVisibleHint")
         if(isVisibleToUser&&mData.size==0){
-            //homeRefresh.post { homeRefresh.isRefreshing = true }
+            //bookRefresh.post { bookRefresh.isRefreshing = true }
             load()
         }
 
@@ -73,12 +68,12 @@ class HomeFragment : Fragment() {
 
     private fun load() {
         async() {
-            var data = CoverSource().obtain("http://ishuhui.net/?PageIndex=1")
+            var data = BookSource().obtain("http://ishuhui.net/ComicBookList/")
 
             uiThread {
                 mData = data
                 adapter.refreshData(data)
-                homeRefresh.isRefreshing = false
+                bookRefresh.isRefreshing = false
             }
         }
     }
@@ -107,6 +102,5 @@ class HomeFragment : Fragment() {
         super.onSaveInstanceState(outState)
         log("onSaveInstanceState")
     }
-
 
 }

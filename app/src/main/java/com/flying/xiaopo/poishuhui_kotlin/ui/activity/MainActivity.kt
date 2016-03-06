@@ -8,14 +8,17 @@ import android.view.MenuItem
 import com.flying.xiaopo.poishuhui_kotlin.R
 import com.flying.xiaopo.poishuhui_kotlin.snackbar
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.ContentPagerAdapter
+import com.flying.xiaopo.poishuhui_kotlin.ui.fragment.BookFragment
 import com.flying.xiaopo.poishuhui_kotlin.ui.fragment.HomeFragment
+import com.flying.xiaopo.poishuhui_kotlin.ui.fragment.NewsFragment
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    val nameResList: ArrayList<Int> = arrayListOf(R.string.tab_one, R.string.tab_two, R.string.tab_three, R.string.tab_four)
+    val nameResList: ArrayList<Int> = arrayListOf(R.string.tab_one, R.string.tab_two, R.string.tab_three)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,16 +32,20 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { fab.snackbar("Hello PoiShuhui-Kotlin") }
         val fragments = ArrayList<Fragment>()
 
+
         fragments.add(HomeFragment())
-        fragments.add(HomeFragment())
-        fragments.add(HomeFragment())
-        fragments.add(HomeFragment())
+        fragments.add(BookFragment())
+        fragments.add(NewsFragment())
+
 
         val nameList = nameResList.map { Int -> getString(Int) }
 
         viewPager.adapter = ContentPagerAdapter(fragments, nameList, supportFragmentManager)
+        viewPager.offscreenPageLimit = 2
 
         tabLayout.setupWithViewPager(viewPager)
+
+        Picasso.with(this).setIndicatorsEnabled(true)
     }
 
 

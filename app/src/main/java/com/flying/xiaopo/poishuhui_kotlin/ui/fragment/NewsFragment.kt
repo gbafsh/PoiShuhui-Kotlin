@@ -4,65 +4,61 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.flying.xiaopo.poishuhui_kotlin.R
-import com.flying.xiaopo.poishuhui_kotlin.domain.data.CoverSource
-import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
+import com.flying.xiaopo.poishuhui_kotlin.domain.data.NewsSource
+import com.flying.xiaopo.poishuhui_kotlin.domain.model.NewsContainer
 import com.flying.xiaopo.poishuhui_kotlin.log
-import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.CoverAdapter
+import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.NewsContainerAdapter
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
 import java.util.*
 
-/**
- * Created by Flying SnowBean on 16-3-2.
- */
-class HomeFragment : Fragment() {
-    var mData = ArrayList<Cover>()
-    lateinit var coverList: RecyclerView
-    lateinit var homeRefresh: SwipeRefreshLayout
-    var adapter = CoverAdapter()
+class NewsFragment : Fragment() {
+    var mData = ArrayList<NewsContainer>()
+    lateinit var newsList: RecyclerView
+    lateinit var newsRefresh: SwipeRefreshLayout
+    var adapter = NewsContainerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        retainInstance = true
+        this.retainInstance = true
         log("onCreate")
-
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var rootView = inflater?.inflate(R.layout.fragment_home, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (savedInstanceState == null) log("savedInstanceState==null")
         log("onCreateView")
-
+        val rootView = inflater.inflate(R.layout.fragment_news, container, false)
         return rootView
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState == null) log("savedInstanceState==null")
         log("onViewCreated")
 
-        homeRefresh = view.findViewById(R.id.homeRefresh) as SwipeRefreshLayout
-        coverList = view.findViewById(R.id.homeList) as RecyclerView
+        newsRefresh = view.findViewById(R.id.newsRefresh) as SwipeRefreshLayout
+        newsList = view.findViewById(R.id.newsList) as RecyclerView
 
-        coverList.layoutManager = GridLayoutManager(context, 2)
-        coverList.adapter = adapter
+        newsList.layoutManager = LinearLayoutManager(context)
+        newsList.adapter = adapter
 
-        homeRefresh.setOnRefreshListener {
+        newsRefresh.setOnRefreshListener {
             load()
         }
-        homeRefresh.post { homeRefresh.isRefreshing = true }
-
+        newsRefresh.post { newsRefresh.isRefreshing = true }
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         log("setUserVisibleHint")
-        if(isVisibleToUser&&mData.size==0){
-            //homeRefresh.post { homeRefresh.isRefreshing = true }
+        if (isVisibleToUser&&mData.size==0) {
+            //newsRefresh.post { newsRefresh.isRefreshing = true }
             load()
         }
 
@@ -73,12 +69,11 @@ class HomeFragment : Fragment() {
 
     private fun load() {
         async() {
-            var data = CoverSource().obtain("http://ishuhui.net/?PageIndex=1")
-
+            var data = NewsSource().obtain("http://ishuhui.net/CMS/")
             uiThread {
                 mData = data
                 adapter.refreshData(data)
-                homeRefresh.isRefreshing = false
+                newsRefresh.isRefreshing = false
             }
         }
     }
@@ -107,6 +102,4 @@ class HomeFragment : Fragment() {
         super.onSaveInstanceState(outState)
         log("onSaveInstanceState")
     }
-
-
 }

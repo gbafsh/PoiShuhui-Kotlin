@@ -7,20 +7,22 @@ import android.view.ViewGroup
 import com.flying.xiaopo.poishuhui_kotlin.R
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_cover.*
+import kotlinx.android.synthetic.main.item_cover.view.*
 import java.util.*
 
 /**
  * Created by Flying SnowBean on 16-3-5.
  */
-class CoverAdapter(val data: List<Cover> = ArrayList()) : RecyclerView.Adapter<CoverAdapter.CoverViewHolder>() {
+class CoverAdapter(var data: List<Cover> = ArrayList()) : RecyclerView.Adapter<CoverAdapter.CoverViewHolder>() {
 
     override fun onBindViewHolder(holder: CoverViewHolder, position: Int) {
-        bindView(holder,position)
+        bindView(holder.itemView,position)
     }
 
-    private fun bindView(holder: CoverViewHolder, position: Int) {
-
+    private fun bindView(itemView: View, position: Int) {
+        val cover = data[position]
+        itemView.tv_cover.text = cover.title
+        Picasso.with(itemView.context).load(cover.coverUrl).into(itemView.iv_cover)
     }
 
     override fun getItemCount(): Int = data.size
@@ -30,7 +32,12 @@ class CoverAdapter(val data: List<Cover> = ArrayList()) : RecyclerView.Adapter<C
         return CoverViewHolder(itemView)
     }
 
-    class CoverViewHolder(val itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun refreshData(newData: List<Cover>){
+        data = newData
+        notifyDataSetChanged()
+    }
+
+    class CoverViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
 

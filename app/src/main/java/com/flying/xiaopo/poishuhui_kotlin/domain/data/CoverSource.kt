@@ -1,7 +1,8 @@
 package com.flying.xiaopo.poishuhui_kotlin.domain.data
 
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
-import org.jsoup.nodes.Document
+import com.flying.xiaopo.poishuhui_kotlin.getHtml
+import org.jsoup.Jsoup
 import java.util.*
 
 /**
@@ -11,7 +12,10 @@ class CoverSource() : Source<Cover> {
     override fun obtain(url: String): ArrayList<Cover> {
         val list = ArrayList<Cover>()
 
-        val doc = Document(url)
+        val html = getHtml(url)
+        var doc = Jsoup.parse(html)
+        //        var doc = Jsoup.connect(url).get()
+
         val elements = doc.select("ul.mangeListBox").select("li")
         for (element in elements) {
             val coverUrl = element.select("img").attr("src")
