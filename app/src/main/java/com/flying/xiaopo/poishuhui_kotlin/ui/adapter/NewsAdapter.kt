@@ -9,7 +9,7 @@ import com.flying.xiaopo.poishuhui_kotlin.domain.model.News
 import kotlinx.android.synthetic.main.item_child_news.view.*
 import java.util.*
 
-class NewsAdapter(val data: List<News> = ArrayList()) : RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder>() {
+class NewsAdapter(var data: List<News> = ArrayList()) : RecyclerView.Adapter<NewsAdapter.NewsAdapterViewHolder>() {
     override fun onBindViewHolder(holder: NewsAdapterViewHolder, position: Int) {
         bindView(holder.itemView, position)
     }

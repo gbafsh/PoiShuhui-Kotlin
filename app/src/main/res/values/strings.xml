@@ -7,4 +7,6 @@
 	<string name="tab_three">动漫资讯</string>
 
 	<string name="network_error">网络加载失败，请重试！</string>
+
+	<string name="page_load_error">页面信息加载错误，有几个链接鼠绘是重定向的，好奇怪，有很多都是这样的，也有一些是好的，当然也有可能是网络问题，Sorry～</string>
 </resources>

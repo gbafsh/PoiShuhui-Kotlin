@@ -13,7 +13,9 @@ import com.flying.xiaopo.poishuhui_kotlin.R
 import com.flying.xiaopo.poishuhui_kotlin.domain.data.CoverSource
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
 import com.flying.xiaopo.poishuhui_kotlin.log
+import com.flying.xiaopo.poishuhui_kotlin.snackbar
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.CoverAdapter
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
 import java.util.*
@@ -23,9 +25,12 @@ import java.util.*
  */
 class HomeFragment : Fragment() {
     var mData = ArrayList<Cover>()
+
     lateinit var coverList: RecyclerView
+
     lateinit var homeRefresh: SwipeRefreshLayout
-    var adapter = CoverAdapter()
+
+    lateinit var adapter: CoverAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,29 +49,36 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         log("onViewCreated")
+        initView(view)
+    }
 
+    /**
+     * init setting view
+     */
+    private fun initView(view: View) {
         homeRefresh = view.findViewById(R.id.homeRefresh) as SwipeRefreshLayout
         coverList = view.findViewById(R.id.homeList) as RecyclerView
 
         coverList.layoutManager = GridLayoutManager(context, 2)
+
+        adapter = CoverAdapter { view: View, i: Int -> view.snackbar("Comic->" + i) }
         coverList.adapter = adapter
 
         homeRefresh.setOnRefreshListener {
             load()
         }
         homeRefresh.post { homeRefresh.isRefreshing = true }
-
     }
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         log("setUserVisibleHint")
-        if(isVisibleToUser&&mData.size==0){
+        if (isVisibleToUser && mData.size == 0) {
             //homeRefresh.post { homeRefresh.isRefreshing = true }
             load()
         }
 
-        if(isVisibleToUser){
+        if (isVisibleToUser) {
             log("isVisibleToUser is true")
         }
     }
