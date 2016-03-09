@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
+import android.webkit.WebView
 import android.widget.Toast
 import com.squareup.okhttp.Request
 
@@ -34,4 +35,8 @@ fun getHtml(url: String): String {
 
     val response = client.newCall(request).execute()
     return response.body().string()
+}
+
+fun WebView.load(html: String) {
+    this.loadDataWithBaseURL(null, html, "text/html", "charset=utf-8", null)
 }

@@ -1,4 +1,4 @@
-package com.flying.xiaopo.poishuhui_kotlin.domain.data
+package com.flying.xiaopo.poishuhui_kotlin.domain.network
 
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
 import com.flying.xiaopo.poishuhui_kotlin.getHtml
@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Created by Flying SnowBean on 16-3-5.
  */
-class BookSource() : Source<Cover> {
+class BookSource() : Source<ArrayList<Cover>> {
     override fun obtain(url: String): ArrayList<Cover> {
         val list = ArrayList<Cover>()
 

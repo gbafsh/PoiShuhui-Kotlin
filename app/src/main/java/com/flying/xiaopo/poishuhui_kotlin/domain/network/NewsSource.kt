@@ -1,4 +1,4 @@
-package com.flying.xiaopo.poishuhui_kotlin.domain.data
+package com.flying.xiaopo.poishuhui_kotlin.domain.network
 
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.News
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.NewsContainer
@@ -9,7 +9,7 @@ import java.util.*
 /**
  * Created by Flying SnowBean on 16-3-5.
  */
-class NewsSource() : Source<NewsContainer> {
+class NewsSource() : Source<ArrayList<NewsContainer>> {
     override fun obtain(url: String): ArrayList<NewsContainer> {
         var list = ArrayList<NewsContainer>()
 

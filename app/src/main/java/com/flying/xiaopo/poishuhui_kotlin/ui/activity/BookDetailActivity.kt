@@ -1,5 +1,6 @@
 package com.flying.xiaopo.poishuhui_kotlin.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.AppCompatActivity
@@ -9,9 +10,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.flying.xiaopo.poishuhui_kotlin.R
-import com.flying.xiaopo.poishuhui_kotlin.domain.data.BookDetailSource
+import com.flying.xiaopo.poishuhui_kotlin.domain.model.BookDetail
+import com.flying.xiaopo.poishuhui_kotlin.domain.model.News
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Page
+import com.flying.xiaopo.poishuhui_kotlin.domain.network.BookDetailSource
+import com.flying.xiaopo.poishuhui_kotlin.domain.network.NewsDetailSource
+import com.flying.xiaopo.poishuhui_kotlin.domain.network.SBSSource
 import com.flying.xiaopo.poishuhui_kotlin.snackbar
+import com.flying.xiaopo.poishuhui_kotlin.toast
+import com.flying.xiaopo.poishuhui_kotlin.ui.WebDetailDialog
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.PageAdapter
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_book_detail.*
@@ -25,7 +32,7 @@ class BookDetailActivity : AppCompatActivity() {
     lateinit var pageList: RecyclerView
     lateinit var adapter: PageAdapter
     lateinit var pageRefresh: SwipeRefreshLayout
-    var mData = ArrayList<Page>()
+    lateinit var bookDetail: BookDetail
 
     companion object {
         val INTENT_COVER_URL = "cover"
@@ -37,7 +44,6 @@ class BookDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book_detail)
 
-        //val toolbar = find<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
 
@@ -45,8 +51,8 @@ class BookDetailActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val coverUrl = intent?.getStringExtra(INTENT_COVER_URL)
-        var title = intent?.getStringExtra(INTENT_TITLE)
+        val coverUrl = intent.getStringExtra(INTENT_COVER_URL)
+        var title = intent.getStringExtra(INTENT_TITLE)
         url = intent.getStringExtra(INTENT_URL)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -60,12 +66,19 @@ class BookDetailActivity : AppCompatActivity() {
         pageList = find(R.id.pageList)
         pageList.layoutManager = GridLayoutManager(this, 4)
 
+        //TODO need to do better
         adapter = PageAdapter { view: View, position: Int ->
-            jump2Read(position)
+            if (title.contains("SBS")) {
+                val news = News(bookDetail[position].title, "", bookDetail[position].link)
+                WebDetailDialog(this, news, SBSSource())
+            } else
+                jump2Read(position)
         }
+
         pageList.adapter = adapter
 
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -74,18 +87,21 @@ class BookDetailActivity : AppCompatActivity() {
     }
 
     private fun load() = async() {
-        val bookDetail = BookDetailSource().obtain(url)
-        mData = bookDetail.pages as ArrayList<Page>
+        bookDetail = BookDetailSource().obtain(url)
+        val data = bookDetail.pages as ArrayList<Page>
 
         uiThread {
-            adapter.refreshData(mData)
+            adapter.refreshData(data)
             pageRefresh.isRefreshing = false
-            if (mData.size == 0) {
+            if (bookDetail.size() == 0) {
                 showError()
             }
         }
     }
 
+    /**
+     * to show error
+     */
     private fun showError() {
         pageList.snackbar(R.string.page_load_error)
     }
@@ -93,14 +109,20 @@ class BookDetailActivity : AppCompatActivity() {
 
     /**
      * jump to comic page
+     * and special handle SBS
      */
     private fun jump2Read(position: Int) {
+        //        toast(bookDetail[position].link)
 
+
+        var intent = Intent(this, ComicActivity().javaClass)
+        intent.putExtra(ComicActivity.INTENT_COMIC_URL, bookDetail[position].link)
+        startActivity(intent)
     }
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_book_detail, menu)
         return true
     }
 
@@ -110,8 +132,19 @@ class BookDetailActivity : AppCompatActivity() {
         if (id == android.R.id.home) {
             onBackPressed()
             return true
+        } else if (id == R.id.action_info) {
+            showBookInfo()
+            return true
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * to show the info of book
+     */
+    private fun showBookInfo() {
+        val bookInfo = bookDetail.info
+        pageList.snackbar(bookInfo.description + "\n" + bookInfo.updateTime)
     }
 }

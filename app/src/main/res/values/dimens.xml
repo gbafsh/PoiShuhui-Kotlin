@@ -7,4 +7,5 @@
 	<dimen name="news_title_size">24sp</dimen>
 	<dimen name="news_title_more_size">16sp</dimen>
 	<dimen name="news_child_size">12sp</dimen>
+	<dimen name="appbar_image_height">256dp</dimen>
 </resources>

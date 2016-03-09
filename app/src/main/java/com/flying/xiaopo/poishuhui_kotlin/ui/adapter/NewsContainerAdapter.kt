@@ -11,7 +11,8 @@ import com.flying.xiaopo.poishuhui_kotlin.domain.model.NewsContainer
 import kotlinx.android.synthetic.main.item_news.view.*
 import java.util.*
 
-class NewsContainerAdapter(var data: List<NewsContainer> = ArrayList()) : RecyclerView.Adapter<NewsContainerAdapter.NewsContainerAdapterViewHolder>() {
+class NewsContainerAdapter(var data: List<NewsContainer> = ArrayList())
+: RecyclerView.Adapter<NewsContainerAdapter.NewsContainerAdapterViewHolder>() {
 
     override fun onBindViewHolder(holder: NewsContainerAdapterViewHolder, position: Int) {
         bindView(holder.itemView, position)
@@ -22,7 +23,8 @@ class NewsContainerAdapter(var data: List<NewsContainer> = ArrayList()) : Recycl
         itemView.tv_container_title.text = newsContainer.title
 
         itemView.rv_child_container.layoutManager = LinearLayoutManager(itemView.context)
-        itemView.rv_child_container.adapter = NewsAdapter(newsContainer.newsList)
+        itemView.rv_child_container.adapter =
+                NewsAdapter(newsContainer.newsList)
     }
 
     override fun getItemCount(): Int = data.size
@@ -32,7 +34,7 @@ class NewsContainerAdapter(var data: List<NewsContainer> = ArrayList()) : Recycl
         return NewsContainerAdapterViewHolder(itemView)
     }
 
-    fun refreshData(newData:List<NewsContainer>){
+    fun refreshData(newData: List<NewsContainer>) {
         data = newData
         notifyDataSetChanged()
     }

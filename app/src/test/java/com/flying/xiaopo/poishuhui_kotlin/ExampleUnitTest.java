@@ -1,13 +1,9 @@
 package com.flying.xiaopo.poishuhui_kotlin;
 
-import com.flying.xiaopo.poishuhui_kotlin.domain.data.BookDetailSource;
+import com.flying.xiaopo.poishuhui_kotlin.domain.network.BookDetailSource;
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.BookDetail;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
 
 import org.junit.Test;
-
-import java.io.IOException;
 
 import static org.junit.Assert.*;
 

@@ -1,5 +1,6 @@
 package com.flying.xiaopo.poishuhui_kotlin.ui.fragment
 
+
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,19 +11,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.flying.xiaopo.poishuhui_kotlin.R
-import com.flying.xiaopo.poishuhui_kotlin.domain.data.NewsSource
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.NewsContainer
+import com.flying.xiaopo.poishuhui_kotlin.domain.network.NewsSource
 import com.flying.xiaopo.poishuhui_kotlin.log
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.NewsContainerAdapter
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
 import java.util.*
 
+/**
+ * Third Page
+ * Created by Flying SnowBean on 16-3-2.
+ */
 class NewsFragment : Fragment() {
     var mData = ArrayList<NewsContainer>()
+
     lateinit var newsList: RecyclerView
+
     lateinit var newsRefresh: SwipeRefreshLayout
-    var adapter = NewsContainerAdapter()
+
+    lateinit var adapter: NewsContainerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +41,7 @@ class NewsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (savedInstanceState == null) log("savedInstanceState==null")
         log("onCreateView")
-        val rootView = inflater.inflate(R.layout.fragment_news, container, false)
-        return rootView
+        return inflater.inflate(R.layout.fragment_news, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,6 +53,7 @@ class NewsFragment : Fragment() {
         newsList = view.findViewById(R.id.newsList) as RecyclerView
 
         newsList.layoutManager = LinearLayoutManager(context)
+        adapter = NewsContainerAdapter()
         newsList.adapter = adapter
 
         newsRefresh.setOnRefreshListener {
@@ -54,15 +62,16 @@ class NewsFragment : Fragment() {
         newsRefresh.post { newsRefresh.isRefreshing = true }
     }
 
+
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         log("setUserVisibleHint")
-        if (isVisibleToUser&&mData.size==0) {
-            //newsRefresh.post { newsRefresh.isRefreshing = true }
+        if (isVisibleToUser && mData.size == 0) {
+
             load()
         }
 
-        if(isVisibleToUser){
+        if (isVisibleToUser) {
             log("isVisibleToUser is true")
         }
     }

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.flying.xiaopo.poishuhui_kotlin.R
+import com.flying.xiaopo.poishuhui_kotlin.log
 import com.flying.xiaopo.poishuhui_kotlin.snackbar
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.ContentPagerAdapter
 import com.flying.xiaopo.poishuhui_kotlin.ui.fragment.BookFragment
@@ -24,6 +25,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
+
+//        val maxMem = Runtime.getRuntime().maxMemory().toInt() / 1024
+//        log("max->$maxMem")
 
     }
 
@@ -50,18 +54,13 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         val id = item.itemId
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true
         }

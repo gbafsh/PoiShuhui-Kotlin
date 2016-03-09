@@ -11,10 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.flying.xiaopo.poishuhui_kotlin.R
-import com.flying.xiaopo.poishuhui_kotlin.domain.data.BookSource
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
+import com.flying.xiaopo.poishuhui_kotlin.domain.network.BookSource
 import com.flying.xiaopo.poishuhui_kotlin.log
-import com.flying.xiaopo.poishuhui_kotlin.snackbar
 import com.flying.xiaopo.poishuhui_kotlin.ui.activity.BookDetailActivity
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.CoverAdapter
 import org.jetbrains.anko.async
@@ -22,6 +21,7 @@ import org.jetbrains.anko.uiThread
 import java.util.*
 
 /**
+ * Second page
  * Created by Flying SnowBean on 16-3-5.
  */
 class BookFragment : Fragment() {
@@ -37,8 +37,7 @@ class BookFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         log("onCreateView")
-        var rootView = inflater.inflate(R.layout.fragment_book, container, false)
-        return rootView
+        return inflater.inflate(R.layout.fragment_book, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,7 +62,7 @@ class BookFragment : Fragment() {
         bookRefresh.setOnRefreshListener {
             load()
         }
-
+        bookRefresh.post { bookRefresh.isRefreshing = true }
     }
 
     /**
@@ -82,7 +81,7 @@ class BookFragment : Fragment() {
         super.setUserVisibleHint(isVisibleToUser)
         log("setUserVisibleHint")
         if (isVisibleToUser && mData.size == 0) {
-            bookRefresh.post { bookRefresh.isRefreshing = true }
+
             load()
         }
 

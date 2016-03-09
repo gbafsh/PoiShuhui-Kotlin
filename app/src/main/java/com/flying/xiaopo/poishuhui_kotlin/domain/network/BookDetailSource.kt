@@ -1,4 +1,4 @@
-package com.flying.xiaopo.poishuhui_kotlin.domain.data
+package com.flying.xiaopo.poishuhui_kotlin.domain.network
 
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.BookDetail
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.BookInfo
@@ -10,8 +10,8 @@ import java.util.*
 /**
  * Created by Flying SnowBean on 16-3-8.
  */
-class BookDetailSource() {
-    fun obtain(url: String): BookDetail {
+class BookDetailSource():Source<BookDetail> {
+    override fun obtain(url: String): BookDetail {
         val html = getHtml(url)
         val doc = Jsoup.parse(html)
 
