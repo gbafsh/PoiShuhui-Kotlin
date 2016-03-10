@@ -21,7 +21,7 @@ class SourceTest{
 
     @Test
     fun testComic(){
-        var data = ComicSource().obtain("http://ishuhui.net/ReadComicBooks/4577.html")
+        var data = ComicSource().obtain("http://ishuhui.net/ReadComicBooks/4581.html")
         Assert.assertFalse(data.size==0)
 
     }

@@ -14,7 +14,6 @@ class CoverSource() : Source<ArrayList<Cover>> {
 
         val html = getHtml(url)
         var doc = Jsoup.parse(html)
-        //        var doc = Jsoup.connect(url).get()
 
         val elements = doc.select("ul.mangeListBox").select("li")
         for (element in elements) {

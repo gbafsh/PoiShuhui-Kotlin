@@ -1,13 +1,13 @@
 package com.flying.xiaopo.poishuhui_kotlin.ui.activity
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import com.flying.xiaopo.poishuhui_kotlin.R
-import com.flying.xiaopo.poishuhui_kotlin.log
-import com.flying.xiaopo.poishuhui_kotlin.snackbar
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.ContentPagerAdapter
 import com.flying.xiaopo.poishuhui_kotlin.ui.fragment.BookFragment
 import com.flying.xiaopo.poishuhui_kotlin.ui.fragment.HomeFragment
@@ -19,6 +19,10 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        val GITHUB_URL = "https://github.com/wuapnjie/PoiShuhui-Kotlin"
+    }
+
     val nameResList: ArrayList<Int> = arrayListOf(R.string.tab_one, R.string.tab_two, R.string.tab_three)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,14 +30,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         init()
 
-//        val maxMem = Runtime.getRuntime().maxMemory().toInt() / 1024
-//        log("max->$maxMem")
 
     }
 
     private fun init() {
         setSupportActionBar(toolbar)
-        fab.setOnClickListener { fab.snackbar("Hello PoiShuhui-Kotlin") }
+        fab.setOnClickListener { jump2MyGithub() }
         val fragments = ArrayList<Fragment>()
 
 
@@ -49,7 +51,13 @@ class MainActivity : AppCompatActivity() {
 
         tabLayout.setupWithViewPager(viewPager)
 
-        Picasso.with(this).setIndicatorsEnabled(true)
+        //        Picasso.with(this).setIndicatorsEnabled(true)
+    }
+
+    private fun jump2MyGithub() {
+        var uri = Uri.parse(GITHUB_URL);
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        startActivity(intent)
     }
 
 
@@ -61,7 +69,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
 
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_about) {
+            var intent = Intent(this, AboutActivity().javaClass)
+            startActivity(intent)
             return true
         }
 

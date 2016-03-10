@@ -1,6 +1,5 @@
 package com.flying.xiaopo.poishuhui_kotlin.ui.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -25,6 +24,9 @@ import java.util.*
  * Created by Flying SnowBean on 16-3-5.
  */
 class BookFragment : Fragment() {
+    companion object{
+        val AIM_URL = "http://ishuhui.net/ComicBookList/"
+    }
     var mData = ArrayList<Cover>()
     lateinit var adapter: CoverAdapter
     lateinit var bookList: RecyclerView
@@ -36,13 +38,11 @@ class BookFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        log("onCreateView")
         return inflater.inflate(R.layout.fragment_book, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        log("onViewCreated")
 
         initView(view)
 
@@ -81,18 +81,14 @@ class BookFragment : Fragment() {
         super.setUserVisibleHint(isVisibleToUser)
         log("setUserVisibleHint")
         if (isVisibleToUser && mData.size == 0) {
-
             load()
         }
 
-        if (isVisibleToUser) {
-            log("isVisibleToUser is true")
-        }
     }
 
     private fun load() {
         async() {
-            var data = BookSource().obtain("http://ishuhui.net/ComicBookList/")
+            var data = BookSource().obtain(AIM_URL)
 
             uiThread {
                 mData = data
@@ -100,31 +96,6 @@ class BookFragment : Fragment() {
                 bookRefresh.isRefreshing = false
             }
         }
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        log("onAttach")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        log("onDestroy")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        log("onDestroyView")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        log("onDetach")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        log("onSaveInstanceState")
     }
 
 }

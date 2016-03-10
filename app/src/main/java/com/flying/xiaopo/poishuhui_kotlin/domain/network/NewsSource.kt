@@ -15,7 +15,6 @@ class NewsSource() : Source<ArrayList<NewsContainer>> {
 
         val html = getHtml(url)
         var doc = Jsoup.parse(html)
-        //        var doc = Jsoup.connect(url).get()
 
         val elements = doc.select("div.reportersBox").select("div.reportersMain")
         for (element in elements) {

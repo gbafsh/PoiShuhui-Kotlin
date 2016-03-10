@@ -5,6 +5,7 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
+import android.webkit.WebSettings
 import com.flying.xiaopo.poishuhui_kotlin.R
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.News
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.NewsDetailSource
@@ -30,7 +31,10 @@ class WebDetailDialog(val context: Context, val news: News, val source: Source<S
         titleBar.subtitle = news.title
 
         webView.settings.textZoom = 80
-        webView.bottomListener = { isScrollToBottom: Boolean -> if (isScrollToBottom) dialog.dismiss() }
+        webView.settings.displayZoomControls = true
+        webView.settings.setSupportZoom(true)
+        webView.settings.layoutAlgorithm = WebSettings.LayoutAlgorithm.SINGLE_COLUMN
+//        webView.bottomListener = { isScrollToBottom: Boolean -> if (isScrollToBottom) dialog.dismiss() }
 
         dialog.setContentView(view)
 
@@ -56,8 +60,7 @@ class WebDetailDialog(val context: Context, val news: News, val source: Source<S
         }
 
         dialog.show()
-        //TODO need add window transition
-        //        dialog.window.exitTransition =
+
     }
 
 }

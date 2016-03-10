@@ -1,19 +1,18 @@
 package com.flying.xiaopo.poishuhui_kotlin.ui.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-
+import android.support.v7.app.AppCompatActivity
 import com.flying.xiaopo.poishuhui_kotlin.R
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Comic
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.ComicSource
 import com.flying.xiaopo.poishuhui_kotlin.ui.fragment.ComicFragment
-import java.util.*
 import kotlinx.android.synthetic.main.activity_comic.*
 import org.jetbrains.anko.async
 import org.jetbrains.anko.uiThread
+import java.util.*
 
 class ComicActivity : AppCompatActivity() {
     companion object {

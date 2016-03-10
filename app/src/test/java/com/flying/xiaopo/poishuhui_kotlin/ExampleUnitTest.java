@@ -17,8 +17,4 @@ public class ExampleUnitTest {
         assertEquals(4, 2 + 2);
     }
 
-    @Test
-    public void testBookDetail(){
-        BookDetail detail = new BookDetailSource().obtain("http://ishuhui.net/ComicBookInfo/45");
-    }
 }

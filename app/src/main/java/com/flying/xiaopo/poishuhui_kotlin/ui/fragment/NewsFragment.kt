@@ -1,7 +1,6 @@
 package com.flying.xiaopo.poishuhui_kotlin.ui.fragment
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
@@ -24,6 +23,10 @@ import java.util.*
  * Created by Flying SnowBean on 16-3-2.
  */
 class NewsFragment : Fragment() {
+    companion object {
+        val AIM_URL = "http://ishuhui.net/CMS/"
+    }
+
     var mData = ArrayList<NewsContainer>()
 
     lateinit var newsList: RecyclerView
@@ -35,19 +38,16 @@ class NewsFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.retainInstance = true
-        log("onCreate")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (savedInstanceState == null) log("savedInstanceState==null")
-        log("onCreateView")
         return inflater.inflate(R.layout.fragment_news, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState == null) log("savedInstanceState==null")
-        log("onViewCreated")
 
         newsRefresh = view.findViewById(R.id.newsRefresh) as SwipeRefreshLayout
         newsList = view.findViewById(R.id.newsList) as RecyclerView
@@ -65,20 +65,16 @@ class NewsFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        log("setUserVisibleHint")
         if (isVisibleToUser && mData.size == 0) {
 
             load()
         }
 
-        if (isVisibleToUser) {
-            log("isVisibleToUser is true")
-        }
     }
 
     private fun load() {
         async() {
-            var data = NewsSource().obtain("http://ishuhui.net/CMS/")
+            var data = NewsSource().obtain(AIM_URL)
             uiThread {
                 mData = data
                 adapter.refreshData(data)
@@ -87,28 +83,4 @@ class NewsFragment : Fragment() {
         }
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        log("onAttach")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        log("onDestroy")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        log("onDestroyView")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        log("onDetach")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        log("onSaveInstanceState")
-    }
 }

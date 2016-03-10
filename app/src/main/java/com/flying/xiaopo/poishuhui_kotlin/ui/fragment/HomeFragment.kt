@@ -1,6 +1,5 @@
 package com.flying.xiaopo.poishuhui_kotlin.ui.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -14,7 +13,6 @@ import com.flying.xiaopo.poishuhui_kotlin.R
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.CoverSource
 import com.flying.xiaopo.poishuhui_kotlin.log
-import com.flying.xiaopo.poishuhui_kotlin.snackbar
 import com.flying.xiaopo.poishuhui_kotlin.ui.activity.ComicActivity
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.CoverAdapter
 import org.jetbrains.anko.async
@@ -26,6 +24,9 @@ import java.util.*
  * Created by Flying SnowBean on 16-3-2.
  */
 class HomeFragment : Fragment() {
+    companion object{
+        val AIM_URL = "http://ishuhui.net/?PageIndex=1"
+    }
     var mData = ArrayList<Cover>()
 
     lateinit var coverList: RecyclerView
@@ -37,8 +38,6 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        log("onCreate")
-
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -80,20 +79,15 @@ class HomeFragment : Fragment() {
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-        log("setUserVisibleHint")
         if (isVisibleToUser && mData.size == 0) {
-
             load()
         }
 
-        if (isVisibleToUser) {
-            log("isVisibleToUser is true")
-        }
     }
 
     private fun load() {
         async() {
-            val data = CoverSource().obtain("http://ishuhui.net/?PageIndex=1")
+            val data = CoverSource().obtain(AIM_URL)
 
             uiThread {
                 mData = data
@@ -102,31 +96,5 @@ class HomeFragment : Fragment() {
             }
         }
     }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        log("onAttach")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        log("onDestroy")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        log("onDestroyView")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        log("onDetach")
-    }
-
-    override fun onSaveInstanceState(outState: Bundle?) {
-        super.onSaveInstanceState(outState)
-        log("onSaveInstanceState")
-    }
-
 
 }

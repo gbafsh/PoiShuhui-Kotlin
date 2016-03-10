@@ -14,10 +14,8 @@ import com.flying.xiaopo.poishuhui_kotlin.domain.model.BookDetail
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.News
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Page
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.BookDetailSource
-import com.flying.xiaopo.poishuhui_kotlin.domain.network.NewsDetailSource
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.SBSSource
 import com.flying.xiaopo.poishuhui_kotlin.snackbar
-import com.flying.xiaopo.poishuhui_kotlin.toast
 import com.flying.xiaopo.poishuhui_kotlin.ui.WebDetailDialog
 import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.PageAdapter
 import com.squareup.picasso.Picasso

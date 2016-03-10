@@ -21,9 +21,12 @@ class ComicSource() : Source<ArrayList<Comic>> {
             var temp = element.attr("src")
             if (temp.contains(".png") || temp.contains(".jpg") || temp.contains(".JPEG")) {
                 comicUrl = temp
-            } else {
+            } else if (!"".equals(element.attr("data-original"))) {
                 comicUrl = element.attr("data-original")
+            } else {
+                continue
             }
+
             val comic = Comic(comicUrl)
             list.add(comic)
         }

@@ -14,7 +14,6 @@ class   App : Application() {
     override fun onCreate() {
         super.onCreate()
         val maxMem = Runtime.getRuntime().maxMemory().toInt()
-//        log("max->$maxMem")
         Picasso.Builder(this).memoryCache(LruCache(maxMem / 8)).build()
     }
 }

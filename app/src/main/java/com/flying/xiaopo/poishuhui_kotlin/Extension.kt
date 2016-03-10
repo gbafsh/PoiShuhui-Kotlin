@@ -38,5 +38,5 @@ fun getHtml(url: String): String {
 }
 
 fun WebView.load(html: String) {
-    this.loadDataWithBaseURL(null, html, "text/html", "charset=utf-8", null)
+    this.loadDataWithBaseURL("http://ishuhui.net/", html, "text/html", "charset=utf-8", null)
 }

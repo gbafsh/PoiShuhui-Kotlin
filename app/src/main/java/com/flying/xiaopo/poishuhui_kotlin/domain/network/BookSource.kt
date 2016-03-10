@@ -2,7 +2,6 @@ package com.flying.xiaopo.poishuhui_kotlin.domain.network
 
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
 import com.flying.xiaopo.poishuhui_kotlin.getHtml
-import com.flying.xiaopo.poishuhui_kotlin.log
 import org.jsoup.Jsoup
 import java.util.*
 
@@ -14,9 +13,9 @@ class BookSource() : Source<ArrayList<Cover>> {
         val list = ArrayList<Cover>()
 
         val html = getHtml(url)
-        log(html)
+        //log(html)
         var doc = Jsoup.parse(html)
-//        var doc = Jsoup.connect(url).get()
+        // var doc = Jsoup.connect(url).get()
 
         val elements = doc.select("ul.chinaMangaContentList").select("li")
 
