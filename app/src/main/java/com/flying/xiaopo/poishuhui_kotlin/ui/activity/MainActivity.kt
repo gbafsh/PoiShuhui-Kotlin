@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         fragments.add(NewsFragment())
 
 
-        val nameList = nameResList.map { Int -> getString(Int) }
+        val nameList = nameResList.map(this::getString)
 
         viewPager.adapter = ContentPagerAdapter(fragments, nameList, supportFragmentManager)
         viewPager.offscreenPageLimit = 2
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun jump2MyGithub() {
-        var uri = Uri.parse(GITHUB_URL);
+        val uri = Uri.parse(GITHUB_URL);
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         val id = item.itemId
 
         if (id == R.id.action_about) {
-            var intent = Intent(this, AboutActivity().javaClass)
+            val intent = Intent(this, AboutActivity().javaClass)
             startActivity(intent)
             return true
         }

@@ -12,7 +12,7 @@ class SBSSource() : Source<String> {
         val doc = Jsoup.parse(html)
 
         //TODO Need To do better
-        var contentHtml =
+        val contentHtml =
                 "<html>${doc.select("head").toString()}<body>${doc.select("div.mangaContentMainImg").toString()}</body></html>"
         return contentHtml
     }

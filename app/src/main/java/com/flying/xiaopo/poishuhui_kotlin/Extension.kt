@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.squareup.okhttp.Request
 
 /**
- * Created by Flying SnowBean on 16-3-3.
+ * @author wupanjie
  */
 fun Context.toast(message: String, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()

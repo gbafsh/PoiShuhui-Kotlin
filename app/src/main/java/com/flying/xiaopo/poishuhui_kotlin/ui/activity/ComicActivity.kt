@@ -37,7 +37,7 @@ class ComicActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         async() {
-            var data = ComicSource().obtain(url)
+            val data = ComicSource().obtain(url)
             mData = data
 
             uiThread {

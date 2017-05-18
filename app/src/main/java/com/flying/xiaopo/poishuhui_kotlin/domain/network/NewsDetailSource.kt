@@ -11,7 +11,7 @@ class NewsDetailSource() : Source<String> {
         val html = getHtml(url)
         val doc = Jsoup.parse(html)
 
-        var contentHtml =
+        val contentHtml =
                 "<html>${doc.select("head").toString()}<body>${doc.select("div.featureContentText").toString()}</body></html>"
         return contentHtml
     }

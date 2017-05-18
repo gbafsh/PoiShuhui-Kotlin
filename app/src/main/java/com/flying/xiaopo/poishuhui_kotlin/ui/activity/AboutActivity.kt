@@ -26,7 +26,7 @@ class AboutActivity : AppCompatActivity() {
     }
 
     private fun email2Me() {
-        var uri = Uri.parse(EMAIL_URI);
+        val uri = Uri.parse(EMAIL_URI);
         val intent = Intent(Intent.ACTION_SENDTO, uri)
         startActivity(intent)
     }

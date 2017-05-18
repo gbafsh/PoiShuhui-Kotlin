@@ -15,12 +15,12 @@ class BookDetailSource():Source<BookDetail> {
         val html = getHtml(url)
         val doc = Jsoup.parse(html)
 
-        var pages = ArrayList<Page>()
+        val pages = ArrayList<Page>()
         val elements = doc.select("div.volumeControl").select("a")
 
         for (element in elements) {
             val title = element.text()
-            var link = "http://ishuhui.net/" + element.attr("href")
+            val link = "http://ishuhui.net/" + element.attr("href")
             val page = Page(title, link)
             pages.add(page)
         }

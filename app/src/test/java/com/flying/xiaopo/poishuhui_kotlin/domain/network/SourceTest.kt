@@ -4,7 +4,7 @@ import org.junit.Assert
 import org.junit.Test
 
 /**
- * Created by Flying SnowBean on 16-3-5.
+ * @author wupanjie
  */
 class SourceTest{
     @Test

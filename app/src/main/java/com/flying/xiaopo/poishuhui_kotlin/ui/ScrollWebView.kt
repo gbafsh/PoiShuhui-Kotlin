@@ -7,7 +7,7 @@ import android.webkit.WebView
 
 /**
  * TODO to know if scroll to bottom , and do better
- * Created by Flying SnowBean on 16-3-9.
+ * @author wupanjie
  */
 class ScrollWebView : WebView {
     private val TAG = ScrollWebView::class.java.simpleName

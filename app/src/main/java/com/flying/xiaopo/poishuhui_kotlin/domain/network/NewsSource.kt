@@ -7,19 +7,19 @@ import org.jsoup.Jsoup
 import java.util.*
 
 /**
- * Created by Flying SnowBean on 16-3-5.
+ * @author wupanjie
  */
 class NewsSource() : Source<ArrayList<NewsContainer>> {
     override fun obtain(url: String): ArrayList<NewsContainer> {
-        var list = ArrayList<NewsContainer>()
+        val list = ArrayList<NewsContainer>()
 
         val html = getHtml(url)
-        var doc = Jsoup.parse(html)
+        val doc = Jsoup.parse(html)
 
         val elements = doc.select("div.reportersBox").select("div.reportersMain")
         for (element in elements) {
             val title = element.select("div.mangeListTitle").select("span").text()
-            var newsList = ArrayList<News>()
+            val newsList = ArrayList<News>()
 
             for (ele in element.select("ul.reportersList").select("li").select("a")) {
                 val title_news = ele.select("span")[0].text().replace("&amp", "\t")

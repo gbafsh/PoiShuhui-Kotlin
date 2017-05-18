@@ -21,7 +21,7 @@ import java.util.*
 
 /**
  * Second page
- * Created by Flying SnowBean on 16-3-5.
+ * @author wupanjie
  */
 class BookFragment : Fragment() {
     companion object{
@@ -56,7 +56,7 @@ class BookFragment : Fragment() {
         bookList = view.findViewById(R.id.bookList) as RecyclerView
 
         bookList.layoutManager = GridLayoutManager(context, 2)
-        adapter = CoverAdapter { view: View, i: Int -> jump2Detail(i) }
+        adapter = CoverAdapter { _: View, i: Int -> jump2Detail(i) }
         bookList.adapter = adapter
 
         bookRefresh.setOnRefreshListener {
@@ -88,7 +88,7 @@ class BookFragment : Fragment() {
 
     private fun load() {
         async() {
-            var data = BookSource().obtain(AIM_URL)
+            val data = BookSource().obtain(AIM_URL)
 
             uiThread {
                 mData = data

@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_cover.view.*
 import java.util.*
 
 /**
- * Created by Flying SnowBean on 16-3-5.
+ * @author wupanjie
  */
 class CoverAdapter(var data: List<Cover> = ArrayList(), var itemClick: (View, Int) -> Unit)
 : RecyclerView.Adapter<CoverAdapter.CoverViewHolder>() {

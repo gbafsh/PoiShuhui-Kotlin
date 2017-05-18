@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.view.ViewGroup
 
 /**
- * Created by Flying SnowBean on 16-3-2.
+ * @author wupanjie
  */
 class ContentPagerAdapter(val fragments: List<Fragment>, val nameList: List<String>, val fm: FragmentManager) : FragmentPagerAdapter(fm) {
 

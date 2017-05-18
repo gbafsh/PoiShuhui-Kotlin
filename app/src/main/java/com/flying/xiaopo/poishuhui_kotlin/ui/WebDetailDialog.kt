@@ -17,7 +17,7 @@ import org.jetbrains.anko.uiThread
 
 /**
  * A bottom dialog to display the news detail
- * Created by Flying SnowBean on 16-3-9.
+ * @author wupanjie
  */
 class WebDetailDialog(val context: Context, val news: News, val source: Source<String>) {
     val dialog = BottomSheetDialog(context)

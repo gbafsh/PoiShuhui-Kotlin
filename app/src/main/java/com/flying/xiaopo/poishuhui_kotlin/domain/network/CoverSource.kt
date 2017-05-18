@@ -6,14 +6,14 @@ import org.jsoup.Jsoup
 import java.util.*
 
 /**
- * Created by Flying SnowBean on 16-3-2.
+ * @author wupanjie
  */
 class CoverSource() : Source<ArrayList<Cover>> {
     override fun obtain(url: String): ArrayList<Cover> {
         val list = ArrayList<Cover>()
 
         val html = getHtml(url)
-        var doc = Jsoup.parse(html)
+        val doc = Jsoup.parse(html)
 
         val elements = doc.select("ul.mangeListBox").select("li")
         for (element in elements) {

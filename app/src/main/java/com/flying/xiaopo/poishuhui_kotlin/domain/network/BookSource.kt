@@ -6,7 +6,7 @@ import org.jsoup.Jsoup
 import java.util.*
 
 /**
- * Created by Flying SnowBean on 16-3-5.
+ * @author wupanjie
  */
 class BookSource() : Source<ArrayList<Cover>> {
     override fun obtain(url: String): ArrayList<Cover> {
@@ -14,7 +14,7 @@ class BookSource() : Source<ArrayList<Cover>> {
 
         val html = getHtml(url)
         //log(html)
-        var doc = Jsoup.parse(html)
+        val doc = Jsoup.parse(html)
         // var doc = Jsoup.connect(url).get()
 
         val elements = doc.select("ul.chinaMangaContentList").select("li")

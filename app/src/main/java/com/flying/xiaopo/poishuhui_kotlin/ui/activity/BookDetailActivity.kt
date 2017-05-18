@@ -65,7 +65,7 @@ class BookDetailActivity : AppCompatActivity() {
         pageList.layoutManager = GridLayoutManager(this, 4)
 
         //TODO need to do better
-        adapter = PageAdapter { view: View, position: Int ->
+        adapter = PageAdapter { _ , position ->
             if (title.contains("SBS")) {
                 val news = News(bookDetail[position].title, "", bookDetail[position].link)
                 WebDetailDialog(this, news, SBSSource())

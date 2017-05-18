@@ -20,7 +20,7 @@ import java.util.*
 
 /**
  * Third Page
- * Created by Flying SnowBean on 16-3-2.
+ * @author wupanjie
  */
 class NewsFragment : Fragment() {
     companion object {

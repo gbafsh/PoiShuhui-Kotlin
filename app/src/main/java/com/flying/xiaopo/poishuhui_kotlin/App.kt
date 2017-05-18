@@ -6,7 +6,7 @@ import com.squareup.picasso.LruCache
 import com.squareup.picasso.Picasso
 
 /**
- * Created by Flying SnowBean on 16-3-9.
+ * @author wupanjie
  */
 class   App : Application() {
     private val TAG = App::class.java.simpleName

@@ -21,7 +21,7 @@ import java.util.*
 
 /**
  * First Page
- * Created by Flying SnowBean on 16-3-2.
+ * @author wupanjie
  */
 class HomeFragment : Fragment() {
     companion object{
