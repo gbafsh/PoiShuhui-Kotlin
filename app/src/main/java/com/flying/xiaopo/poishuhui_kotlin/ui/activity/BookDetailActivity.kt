@@ -14,12 +14,13 @@ import com.flying.xiaopo.poishuhui_kotlin.domain.model.News
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Page
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.BookDetailSource
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.SBSSource
+import com.flying.xiaopo.poishuhui_kotlin.kits.recycler.AnotherAdapter
 import com.flying.xiaopo.poishuhui_kotlin.snackbar
 import com.flying.xiaopo.poishuhui_kotlin.ui.WebDetailDialog
-import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.PageAdapter
+import com.flying.xiaopo.poishuhui_kotlin.ui.binder.PageBinder
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_book_detail.*
-import org.jetbrains.anko.custom.async
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
 import org.jetbrains.anko.uiThread
 import java.util.*
@@ -27,7 +28,7 @@ import java.util.*
 class BookDetailActivity : AppCompatActivity() {
   lateinit var url: String
   lateinit var pageList: RecyclerView
-  lateinit var adapter: PageAdapter
+  lateinit var adapter: AnotherAdapter
   lateinit var pageRefresh: SwipeRefreshLayout
   lateinit var bookDetail: BookDetail
 
@@ -64,13 +65,13 @@ class BookDetailActivity : AppCompatActivity() {
     pageList.layoutManager = GridLayoutManager(this, 4)
 
     //TODO need to do better
-    adapter = PageAdapter { _, position ->
+    adapter = AnotherAdapter().with(Page::class.java, PageBinder().clickWith { _, position ->
       if (title.contains("SBS")) {
         val news = News(bookDetail[position].title, "", bookDetail[position].link)
         WebDetailDialog(this, news, SBSSource())
       } else
         jump2Read(position)
-    }
+    })
 
     pageList.adapter = adapter
 
@@ -83,12 +84,12 @@ class BookDetailActivity : AppCompatActivity() {
     load()
   }
 
-  private fun load() = async() {
+  private fun load() = doAsync {
     bookDetail = BookDetailSource().obtain(url)
     val data = bookDetail.pages as ArrayList<Page>
 
     uiThread {
-      adapter.refreshData(data)
+      adapter.update(data)
       pageRefresh.isRefreshing = false
       if (bookDetail.size() == 0) {
         showError()

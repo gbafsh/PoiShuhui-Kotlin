@@ -5,8 +5,10 @@ import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
 import android.webkit.WebView
+import android.widget.ImageView
 import android.widget.Toast
 import com.squareup.okhttp.Request
+import com.squareup.picasso.Picasso
 
 /**
  * @author wupanjie
@@ -39,4 +41,10 @@ fun getHtml(url: String): String {
 
 fun WebView.load(html: String) {
   this.loadDataWithBaseURL("http://ishuhui.net/", html, "text/html", "charset=utf-8", null)
+}
+
+fun ImageView.loadUrl(url: String) {
+  Picasso.with(this.context)
+      .load(url)
+      .into(this)
 }

@@ -1,48 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<LinearLayout
+	android:id="@+id/container"
+	android:clickable="true"
+	android:background="?attr/selectableItemBackground"
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
-	android:layout_height="wrap_content"
-	android:layout_margin="8dp"
-	android:orientation="vertical"
-	app:cardCornerRadius="2dp"
-	app:cardElevation="10dp">
+	android:layout_height="40dp"
+	android:orientation="horizontal">
 
-	<LinearLayout
-		android:layout_width="match_parent"
+	<TextView
+		android:id="@+id/tv_title"
+		android:layout_width="0dp"
 		android:layout_height="match_parent"
-		android:layout_margin="16dp"
-		android:orientation="vertical">
+		android:layout_gravity="start"
+		android:layout_weight="1"
+		android:gravity="center_vertical"
+		android:text="This is title"
+		android:textSize="@dimen/news_child_size"/>
 
-		<FrameLayout
-			android:layout_width="match_parent"
-			android:layout_height="@dimen/news_title_bar">
-
-			<TextView
-				android:id="@+id/tv_container_title"
-				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
-				android:gravity="start"
-				android:text="Title"
-				android:textSize="@dimen/news_title_size"/>
-
-			<TextView
-				android:id="@+id/tv_more"
-				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
-				android:layout_gravity="end"
-				android:gravity="start"
-				android:text="MORE"
-				android:textSize="@dimen/news_title_more_size"/>
-		</FrameLayout>
-
-		<android.support.v7.widget.RecyclerView
-			android:id="@+id/rv_child_container"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			>
-
-		</android.support.v7.widget.RecyclerView>
-	</LinearLayout>
-</android.support.v7.widget.CardView>
+	<TextView
+		android:id="@+id/tv_time"
+		android:layout_width="wrap_content"
+		android:layout_height="match_parent"
+		android:layout_gravity="right"
+		android:gravity="bottom"
+		android:text="2015-08-30 18:02:06"
+		android:textSize="@dimen/news_child_size"/>
+</LinearLayout>

@@ -12,9 +12,11 @@ import android.view.ViewGroup
 import com.flying.xiaopo.poishuhui_kotlin.R
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.BookSource
+import com.flying.xiaopo.poishuhui_kotlin.kits.recycler.AnotherAdapter
 import com.flying.xiaopo.poishuhui_kotlin.log
 import com.flying.xiaopo.poishuhui_kotlin.ui.activity.BookDetailActivity
-import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.CoverAdapter
+import com.flying.xiaopo.poishuhui_kotlin.ui.binder.CoverBinder
+import kotlinx.android.synthetic.main.fragment_book.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
@@ -29,7 +31,7 @@ class BookFragment : Fragment() {
   }
 
   var mData = ArrayList<Cover>()
-  lateinit var adapter: CoverAdapter
+  lateinit var adapter: AnotherAdapter
   lateinit var bookList: RecyclerView
   lateinit var bookRefresh: SwipeRefreshLayout
 
@@ -53,11 +55,12 @@ class BookFragment : Fragment() {
    * init setting views
    */
   private fun initView(view: View) {
-    bookRefresh = view.findViewById(R.id.bookRefresh) as SwipeRefreshLayout
-    bookList = view.findViewById(R.id.bookList) as RecyclerView
+    bookRefresh = view.bookRefresh
+    bookList = view.bookList
 
     bookList.layoutManager = GridLayoutManager(context, 2)
-    adapter = CoverAdapter { _: View, i: Int -> jump2Detail(i) }
+    adapter = AnotherAdapter()
+        .with(Cover::class.java, CoverBinder().clickWith { item, _ -> jump2Detail(item) })
     bookList.adapter = adapter
 
     bookRefresh.setOnRefreshListener {
@@ -69,12 +72,12 @@ class BookFragment : Fragment() {
   /**
    * click event to detail activity
    */
-  private fun jump2Detail(position: Int) {
+  private fun jump2Detail(cover: Cover) {
     val intent = Intent(context, BookDetailActivity().javaClass)
 
-    intent.putExtra(BookDetailActivity.INTENT_COVER_URL, mData[position].coverUrl)
-    intent.putExtra(BookDetailActivity.INTENT_URL, mData[position].link)
-    intent.putExtra(BookDetailActivity.INTENT_TITLE, mData[position].title)
+    intent.putExtra(BookDetailActivity.INTENT_COVER_URL, cover.coverUrl)
+    intent.putExtra(BookDetailActivity.INTENT_URL, cover.link)
+    intent.putExtra(BookDetailActivity.INTENT_TITLE, cover.title)
     startActivity(intent)
   }
 
@@ -93,7 +96,7 @@ class BookFragment : Fragment() {
 
       uiThread {
         mData = data
-        adapter.refreshData(data)
+        adapter.update(data)
         bookRefresh.isRefreshing = false
       }
     }

@@ -11,7 +11,7 @@ import com.flying.xiaopo.poishuhui_kotlin.domain.model.News
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.NewsDetailSource
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.Source
 import com.flying.xiaopo.poishuhui_kotlin.load
-import org.jetbrains.anko.custom.async
+import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.find
 import org.jetbrains.anko.uiThread
 
@@ -41,7 +41,7 @@ class WebDetailDialog(val context: Context, val news: News, val source: Source<S
     refresh.post { refresh.isRefreshing = true }
 
 
-    async() {
+    doAsync  {
       val html = NewsDetailSource().obtain(news.link)
       uiThread {
         webView.load(html)
@@ -50,7 +50,7 @@ class WebDetailDialog(val context: Context, val news: News, val source: Source<S
     }
 
     refresh.setOnRefreshListener {
-      async() {
+      doAsync {
         val html = source.obtain(news.link)
         uiThread {
           webView.load(html)

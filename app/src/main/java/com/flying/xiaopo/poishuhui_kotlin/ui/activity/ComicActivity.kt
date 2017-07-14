@@ -46,7 +46,8 @@ class ComicActivity : AppCompatActivity() {
     }
   }
 
-  class ComicPagerAdapter(var data: ArrayList<Comic> = ArrayList<Comic>(), fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
+  inner class ComicPagerAdapter(var data: ArrayList<Comic> = ArrayList<Comic>(), fragmentManager: FragmentManager) :
+      FragmentPagerAdapter(fragmentManager) {
     override fun getCount(): Int = data.size
 
     override fun getItem(position: Int): Fragment? = newInstance(data[position].comicUrl)
@@ -58,6 +59,4 @@ class ComicActivity : AppCompatActivity() {
 
     fun newInstance(url: String) = ComicFragment.instance(url)
   }
-
-
 }

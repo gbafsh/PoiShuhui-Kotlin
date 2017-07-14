@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import com.flying.xiaopo.poishuhui_kotlin.R
+import com.flying.xiaopo.poishuhui_kotlin.kits.common.toBundle
 import com.flying.xiaopo.poishuhui_kotlin.log
 import com.flying.xiaopo.poishuhui_kotlin.snackbar
 import com.squareup.picasso.Callback
@@ -26,9 +27,8 @@ class ComicFragment : Fragment() {
   companion object {
     fun instance(url: String): ComicFragment {
       val fragment = ComicFragment()
-      val args = Bundle()
-      args.putString("url", url)
-      fragment.arguments = args
+      fragment.arguments =
+          mapOf("url" to url).toBundle()
       return fragment
     }
   }

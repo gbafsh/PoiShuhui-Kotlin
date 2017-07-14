@@ -12,9 +12,11 @@ import android.view.ViewGroup
 import com.flying.xiaopo.poishuhui_kotlin.R
 import com.flying.xiaopo.poishuhui_kotlin.domain.model.Cover
 import com.flying.xiaopo.poishuhui_kotlin.domain.network.CoverSource
+import com.flying.xiaopo.poishuhui_kotlin.kits.recycler.AnotherAdapter
 import com.flying.xiaopo.poishuhui_kotlin.log
 import com.flying.xiaopo.poishuhui_kotlin.ui.activity.ComicActivity
-import com.flying.xiaopo.poishuhui_kotlin.ui.adapter.CoverAdapter
+import com.flying.xiaopo.poishuhui_kotlin.ui.binder.CoverBinder
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.util.*
@@ -34,7 +36,7 @@ class HomeFragment : Fragment() {
 
   lateinit var homeRefresh: SwipeRefreshLayout
 
-  lateinit var adapter: CoverAdapter
+  lateinit var adapter: AnotherAdapter
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -43,7 +45,6 @@ class HomeFragment : Fragment() {
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
     log("onCreateView")
-
     return inflater?.inflate(R.layout.fragment_home, container, false)
   }
 
@@ -57,12 +58,13 @@ class HomeFragment : Fragment() {
    * init setting view
    */
   private fun initView(view: View) {
-    homeRefresh = view.findViewById(R.id.homeRefresh) as SwipeRefreshLayout
-    coverList = view.findViewById(R.id.homeList) as RecyclerView
+    homeRefresh = view.homeRefresh
+    coverList = view.homeList
 
     coverList.layoutManager = GridLayoutManager(context, 2)
 
-    adapter = CoverAdapter { _: View, position: Int -> jump2Comic(position) }
+    adapter = AnotherAdapter()
+        .with(Cover::class.java, CoverBinder().clickWith { item, _ -> jump2Comic(item) })
     coverList.adapter = adapter
 
     homeRefresh.setOnRefreshListener {
@@ -71,10 +73,9 @@ class HomeFragment : Fragment() {
     homeRefresh.post { homeRefresh.isRefreshing = true }
   }
 
-  private fun jump2Comic(position: Int) {
-//        homeRefresh.snackbar(mData[position].link)
+  private fun jump2Comic(cover: Cover) {
     val intent = Intent(context, ComicActivity().javaClass)
-    intent.putExtra(ComicActivity.INTENT_COMIC_URL, mData[position].link)
+    intent.putExtra(ComicActivity.INTENT_COMIC_URL, cover.link)
     startActivity(intent)
   }
 
@@ -92,7 +93,7 @@ class HomeFragment : Fragment() {
 
       uiThread {
         mData = data
-        adapter.refreshData(data)
+        adapter.update(data)
         homeRefresh.isRefreshing = false
       }
     }
