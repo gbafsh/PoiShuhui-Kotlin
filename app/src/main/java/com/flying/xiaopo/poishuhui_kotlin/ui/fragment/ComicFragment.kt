@@ -18,43 +18,55 @@ import org.jetbrains.anko.find
  * fragment to display comic
  * Created by Flying SnowBean on 16-3-9.
  */
-class ComicFragment(var url: String) : Fragment() {
-    lateinit var progressBar: ProgressBar
-    lateinit var iv_comic: ImageView
+class ComicFragment : Fragment() {
+  lateinit var progressBar: ProgressBar
+  lateinit var iv_comic: ImageView
+  lateinit var url: String;
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        log("onCreate")
+  companion object {
+    fun instance(url: String): ComicFragment {
+      val fragment = ComicFragment()
+      val args = Bundle()
+      args.putString("url", url)
+      fragment.arguments = args
+      return fragment
     }
+  }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_comic_page, container, false)
-        progressBar = rootView.find(R.id.progressBar)
-        iv_comic = rootView.find(R.id.iv_comic)
-        return rootView
-    }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    url = arguments.getString("url","")
+    log("onCreate")
+  }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        progressBar.visibility = View.VISIBLE
-    }
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    val rootView = inflater.inflate(R.layout.fragment_comic_page, container, false)
+    progressBar = rootView.find(R.id.progressBar)
+    iv_comic = rootView.find(R.id.iv_comic)
+    return rootView
+  }
+
+  override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    progressBar.visibility = View.VISIBLE
+  }
 
 
-    override fun onResume() {
-        super.onResume()
-        Picasso.with(context)
-                .load(url)
-                .placeholder(R.color.material_deep_purple_50)
-                .into(iv_comic, object : Callback {
-                    override fun onSuccess() {
-                        progressBar.visibility = View.GONE
-                    }
+  override fun onResume() {
+    super.onResume()
+    Picasso.with(context)
+        .load(url)
+        .placeholder(R.color.material_deep_purple_50)
+        .into(iv_comic, object : Callback {
+          override fun onSuccess() {
+            progressBar.visibility = View.GONE
+          }
 
-                    override fun onError() {
-                        iv_comic.snackbar(R.string.network_error)
-                    }
-                })
-    }
+          override fun onError() {
+            iv_comic.snackbar(R.string.network_error)
+          }
+        })
+  }
 
 }
 

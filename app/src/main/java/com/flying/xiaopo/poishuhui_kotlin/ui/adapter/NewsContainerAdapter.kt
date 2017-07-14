@@ -12,35 +12,33 @@ import kotlinx.android.synthetic.main.item_news.view.*
 import java.util.*
 
 class NewsContainerAdapter(var data: List<NewsContainer> = ArrayList())
-: RecyclerView.Adapter<NewsContainerAdapter.NewsContainerAdapterViewHolder>() {
+  : RecyclerView.Adapter<NewsContainerAdapter.NewsContainerAdapterViewHolder>() {
 
-    override fun onBindViewHolder(holder: NewsContainerAdapterViewHolder, position: Int) {
-        bindView(holder.itemView, position)
-    }
+  override fun onBindViewHolder(holder: NewsContainerAdapterViewHolder, position: Int) {
+    bindView(holder.itemView, position)
+  }
 
-    private fun bindView(itemView: View, position: Int) {
-        val newsContainer = data[position]
-        itemView.tv_container_title.text = newsContainer.title
+  private fun bindView(itemView: View, position: Int) {
+    val newsContainer = data[position]
+    itemView.tv_container_title.text = newsContainer.title
 
-        itemView.rv_child_container.layoutManager = LinearLayoutManager(itemView.context)
-        itemView.rv_child_container.adapter =
-                NewsAdapter(newsContainer.newsList)
-    }
+    itemView.rv_child_container.layoutManager = LinearLayoutManager(itemView.context)
+    itemView.rv_child_container.adapter =
+        NewsAdapter(newsContainer.newsList)
+  }
 
-    override fun getItemCount(): Int = data.size
+  override fun getItemCount(): Int = data.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, type: Int): NewsContainerAdapterViewHolder? {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
-        return NewsContainerAdapterViewHolder(itemView)
-    }
+  override fun onCreateViewHolder(parent: ViewGroup, type: Int): NewsContainerAdapterViewHolder? {
+    val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
+    return NewsContainerAdapterViewHolder(itemView)
+  }
 
-    fun refreshData(newData: List<NewsContainer>) {
-        data = newData
-        notifyDataSetChanged()
-    }
+  fun refreshData(newData: List<NewsContainer>) {
+    data = newData
+    notifyDataSetChanged()
+  }
 
-    class NewsContainerAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
+  class NewsContainerAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 }

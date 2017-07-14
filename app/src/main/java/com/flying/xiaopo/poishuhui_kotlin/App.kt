@@ -8,12 +8,12 @@ import com.squareup.picasso.Picasso
 /**
  * @author wupanjie
  */
-class   App : Application() {
-    private val TAG = App::class.java.simpleName
+class App : Application() {
+  private val TAG = App::class.java.simpleName
 
-    override fun onCreate() {
-        super.onCreate()
-        val maxMem = Runtime.getRuntime().maxMemory().toInt()
-        Picasso.Builder(this).memoryCache(LruCache(maxMem / 8)).build()
-    }
+  override fun onCreate() {
+    super.onCreate()
+    val maxMem = Runtime.getRuntime().maxMemory().toInt()
+    Picasso.Builder(this).memoryCache(LruCache(maxMem / 8)).build()
+  }
 }

@@ -12,32 +12,30 @@ import java.util.*
 
 
 class PageAdapter(var data: List<Page> = ArrayList(), val itemClick: (View, Int) -> Unit)
-: RecyclerView.Adapter<PageAdapter.PageAdapterViewHolder>() {
-    override fun onBindViewHolder(holder: PageAdapterViewHolder, position: Int) {
-        bindView(holder.itemView, position)
-    }
+  : RecyclerView.Adapter<PageAdapter.PageAdapterViewHolder>() {
+  override fun onBindViewHolder(holder: PageAdapterViewHolder, position: Int) {
+    bindView(holder.itemView, position)
+  }
 
-    private fun bindView(itemView: View, position: Int) {
-        val page = data[position]
-        itemView.tv_page.text = page.title
-        itemView.tv_page.setOnClickListener { itemClick(itemView, position) }
+  private fun bindView(itemView: View, position: Int) {
+    val page = data[position]
+    itemView.tv_page.text = page.title
+    itemView.tv_page.setOnClickListener { itemClick(itemView, position) }
 
-    }
+  }
 
-    override fun getItemCount(): Int = data.size
+  override fun getItemCount(): Int = data.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, type: Int): PageAdapterViewHolder? {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_page, parent, false)
-        return PageAdapterViewHolder(itemView)
-    }
+  override fun onCreateViewHolder(parent: ViewGroup, type: Int): PageAdapterViewHolder? {
+    val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_page, parent, false)
+    return PageAdapterViewHolder(itemView)
+  }
 
-    fun refreshData(newData: List<Page>) {
-        data = newData
-        notifyDataSetChanged()
-    }
+  fun refreshData(newData: List<Page>) {
+    data = newData
+    notifyDataSetChanged()
+  }
 
-    class PageAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-    }
+  class PageAdapterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
 }
