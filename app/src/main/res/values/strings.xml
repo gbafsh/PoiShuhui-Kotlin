@@ -29,4 +29,5 @@
 
 	<string name="about_thank">使用的库</string>
 	<string name="thank_info">Picasso \nJsoup</string>
+    <string name="more">MORE</string>
 </resources>

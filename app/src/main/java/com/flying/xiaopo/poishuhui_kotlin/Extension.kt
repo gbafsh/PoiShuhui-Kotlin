@@ -7,8 +7,8 @@ import android.view.View
 import android.webkit.WebView
 import android.widget.ImageView
 import android.widget.Toast
-import com.squareup.okhttp.Request
 import com.squareup.picasso.Picasso
+import okhttp3.Request
 
 /**
  * @author wupanjie
@@ -30,13 +30,13 @@ fun Any.log(message: String) {
 }
 
 fun getHtml(url: String): String {
-  val client = OkClient.instance()
+  val client = OkClient.instance
   val request = Request.Builder()
       .url(url)
       .build()
 
   val response = client.newCall(request).execute()
-  return response.body().string()
+  return response.body()?.string() ?: ""
 }
 
 fun WebView.load(html: String) {

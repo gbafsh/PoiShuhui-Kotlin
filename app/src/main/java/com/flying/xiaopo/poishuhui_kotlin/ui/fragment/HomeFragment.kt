@@ -43,7 +43,8 @@ class HomeFragment : Fragment() {
     retainInstance = true
   }
 
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+      savedInstanceState: Bundle?): View? {
     log("onCreateView")
     return inflater?.inflate(R.layout.fragment_home, container, false)
   }
@@ -64,7 +65,10 @@ class HomeFragment : Fragment() {
     coverList.layoutManager = GridLayoutManager(context, 2)
 
     adapter = AnotherAdapter()
-        .with(Cover::class.java, CoverBinder().clickWith { item, _ -> jump2Comic(item) })
+        .with(Cover::class.java, CoverBinder().clickWith {
+          item, _ ->
+          jump2Comic(item)
+        })
     coverList.adapter = adapter
 
     homeRefresh.setOnRefreshListener {
@@ -88,7 +92,7 @@ class HomeFragment : Fragment() {
   }
 
   private fun load() {
-    doAsync{
+    doAsync {
       val data = CoverSource().obtain(AIM_URL)
 
       uiThread {
