@@ -28,18 +28,20 @@ class ComicFragment : Fragment() {
     fun instance(url: String): ComicFragment {
       val fragment = ComicFragment()
       fragment.arguments =
-          mapOf("url" to url).toBundle()
+          mapOf("url" to url)
+              .toBundle()
       return fragment
     }
   }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    url = arguments.getString("url","")
+    url = arguments.getString("url", "")
     log("onCreate")
   }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+      savedInstanceState: Bundle?): View? {
     val rootView = inflater.inflate(R.layout.fragment_comic_page, container, false)
     progressBar = rootView.find(R.id.progressBar)
     iv_comic = rootView.find(R.id.iv_comic)

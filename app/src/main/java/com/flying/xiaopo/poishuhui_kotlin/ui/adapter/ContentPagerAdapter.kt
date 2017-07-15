@@ -8,7 +8,10 @@ import android.view.ViewGroup
 /**
  * @author wupanjie
  */
-class ContentPagerAdapter(val fragments: List<Fragment>, val nameList: List<String>, val fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class ContentPagerAdapter(
+    val fragments: List<Fragment>,
+    val nameList: List<String>,
+    fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
   override fun getCount(): Int = fragments.size
 

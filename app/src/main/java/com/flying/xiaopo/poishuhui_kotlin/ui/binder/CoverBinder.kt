@@ -20,7 +20,7 @@ class CoverBinder : AnotherBinder<Cover>() {
   }
 
   override fun renderView(holder: AnotherViewHolder, itemView: View, item: Cover) {
-    itemView.tv_cover.text = item.title
-    itemView.iv_cover.loadUrl(item.coverUrl)
+    itemView.tvCover.text = item.title
+    itemView.ivCover.loadUrl(item.coverUrl)
   }
 }

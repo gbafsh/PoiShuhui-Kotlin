@@ -25,21 +25,25 @@ class NewsContainerBinder : AnotherBinder<NewsContainer>() {
   }
 
   override fun renderView(holder: AnotherViewHolder, itemView: View, item: NewsContainer) {
-    itemView.tv_container_title.text = item.title
-    itemView.rv_child_container.isNestedScrollingEnabled = false
+    itemView.tvTitle.text = item.title
+    itemView.newsList.isNestedScrollingEnabled = false
+    val newsCount = item.newsList.size
+    val params = itemView.newsList.layoutParams
+    params.height = (newsCount * itemView.resources.displayMetrics.density * 40).toInt()
+    itemView.newsList.layoutParams = params
 
-    var adapter = itemView.rv_child_container.adapter
+    var adapter = itemView.newsList.adapter
     if (adapter is AnotherAdapter) {
       adapter.update(item.newsList)
     } else {
       adapter = AnotherAdapter().with(News::class.java, NewsBinder())
-      itemView.rv_child_container.adapter = adapter
+      itemView.newsList.adapter = adapter
       adapter.update(item.newsList)
     }
 
-    val layoutManager = itemView.rv_child_container.layoutManager
+    val layoutManager = itemView.newsList.layoutManager
     layoutManager ?: let {
-      itemView.rv_child_container.layoutManager = LinearLayoutManager(itemView.context)
+      itemView.newsList.layoutManager = LinearLayoutManager(itemView.context)
     }
   }
 }

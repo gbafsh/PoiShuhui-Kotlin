@@ -6,7 +6,7 @@
 	<TextView
 		android:background="?attr/selectableItemBackground"
 		android:gravity="center"
-		android:id="@+id/tv_page"
+		android:id="@+id/tvPage"
 		android:padding="8dp"
 		android:layout_width="match_parent"
 		android:layout_height="50dp"/>

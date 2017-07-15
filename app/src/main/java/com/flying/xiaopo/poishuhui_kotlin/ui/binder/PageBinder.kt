@@ -19,6 +19,6 @@ class PageBinder : AnotherBinder<Page>() {
   }
 
   override fun renderView(holder: AnotherViewHolder, itemView: View, item: Page) {
-    itemView.tv_page.text = item.title
+    itemView.tvPage.text = item.title
   }
 }

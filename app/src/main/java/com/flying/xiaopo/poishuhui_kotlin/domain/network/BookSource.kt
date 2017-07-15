@@ -13,9 +13,7 @@ class BookSource : Source<ArrayList<Cover>> {
     val list = ArrayList<Cover>()
 
     val html = getHtml(url)
-    //log(html)
     val doc = Jsoup.parse(html)
-    // var doc = Jsoup.connect(url).get()
 
     val elements = doc.select("ul.chinaMangaContentList").select("li")
 

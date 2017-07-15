@@ -15,7 +15,8 @@ data class Page(val title: String, val link: String)
 
 data class BookDetail(val pages: List<Page>, val info: BookInfo) {
   operator fun get(position: Int) = pages[position]
-  fun size() = pages.size
+  val size
+    get() = pages.size
 }
 
 data class Comic(val comicUrl: String)

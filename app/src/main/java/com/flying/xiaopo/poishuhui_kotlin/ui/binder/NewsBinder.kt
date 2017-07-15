@@ -21,8 +21,8 @@ class NewsBinder : AnotherBinder<News>() {
   }
 
   override fun renderView(holder: AnotherViewHolder, itemView: View, item: News) {
-    itemView.tv_title.text = item.title
-    itemView.tv_time.text = item.createdTime
+    itemView.tvTitle.text = item.title
+    itemView.tvTime.text = item.createdTime
     if (holder.adapterPosition % 2 == 0) {
       itemView.container.setBackgroundResource(R.color.alpha_grey)
     }else{

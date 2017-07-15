@@ -44,7 +44,6 @@ class BookDetailActivity : AppCompatActivity() {
 
     setSupportActionBar(toolbar)
 
-
     init()
   }
 
@@ -91,7 +90,7 @@ class BookDetailActivity : AppCompatActivity() {
     uiThread {
       adapter.update(data)
       pageRefresh.isRefreshing = false
-      if (bookDetail.size() == 0) {
+      if (bookDetail.size == 0) {
         showError()
       }
     }
@@ -110,9 +109,6 @@ class BookDetailActivity : AppCompatActivity() {
    * and special handle SBS
    */
   private fun jump2Read(position: Int) {
-    //        toast(bookDetail[position].link)
-
-
     val intent = Intent(this, ComicActivity().javaClass)
     intent.putExtra(ComicActivity.INTENT_COMIC_URL, bookDetail[position].link)
     startActivity(intent)
